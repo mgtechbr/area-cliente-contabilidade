@@ -21,6 +21,8 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $attr = $request->toArray();
+        $attr['company_id'] = $request->user()->company_id; 
+
 
         User::create($attr);
 
@@ -30,9 +32,11 @@ class UserController extends Controller
         ]);
     }
 
+
     public function update(UserRequest $request, User $user)
     {
         $attr = $request->toArray();
+        $attr['company_id'] = $request->user()->company_id;
 
         $user->update($attr);
 

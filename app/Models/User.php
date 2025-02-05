@@ -24,6 +24,7 @@ class User extends Authenticatable
         'address',
         'password',
         'google_id',
+        'company_id'
     ];
 
     /**
@@ -48,4 +49,15 @@ class User extends Authenticatable
     public function setPasswordAttribute($password) {
         $this->attributes['password'] = bcrypt($password);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
 }

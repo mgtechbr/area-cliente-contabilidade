@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class UserRequest extends FormRequest
+class CompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'unique:users,email,' . optional($this->user)->id,],
             'username' => ['required', 'unique:users,username,' . optional($this->user)->id,],
-            'name' => ['required'],
-            'password' => (empty($this->user->password)) ? ['required', Password::defaults()] : '',
-            'address' => ['required'],
-            'company_id' => 'nullable|exists:companies,id'
+            'name' => ['required']
         ];
     }
 }
