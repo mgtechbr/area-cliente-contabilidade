@@ -21,9 +21,6 @@ const FileUpload = ({ index, parentIndex, onFileChange, files, deleteFile }) => 
             onDrop={handleDrop}
             onDragOver={handleDragOver}
         >
-            <label htmlFor={`files_${parentIndex}_${index}`} className="col-form-label">
-                Arraste e solte arquivos aqui ou clique para selecionar:
-            </label>
             <input
                 type="file"
                 className="form-control"

@@ -25,6 +25,15 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $companies = CompanyResource::collection(Company::latest()->paginate(10));
+
+        return inertia('Companies/CreateCompany', [
+            'companies' => $companies,
+        ]);
+    }
+
     // Criação de nova empresa
     public function store(Request $request)
     {

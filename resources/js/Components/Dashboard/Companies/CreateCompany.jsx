@@ -1,117 +1,21 @@
 import { useForm } from '@inertiajs/inertia-react';
-import React, { useState } from 'react';
+import React from 'react';
 import Folder from '../ManagerFilesFolder/Folder'; // Importe o componente Folder
-import styles from './styles/CreateCompany.module.css'; // Importe os estilos
+import styles from './styles/CreateCompany.module.css';
 
 export default function CreateCompany({ close }) {
     const { data, setData, post, reset, errors } = useForm({
         name: '',
         cnpj: '',
-        folders: [], // Inicializa com um array de pastas vazias
+        folders: [{ name: 'Root', files: [], subFolders: [] }],
     });
-
-    // Função para adicionar uma nova pasta
-    const addFolder = (parentIndex = null, grandParentIndex = null) => {
-        const newFolder = { name: '', files: [], subFolders: [] };
-    
-        const newFolders = [...data.folders];
-    
-        if (grandParentIndex !== null) {
-            // Adiciona uma subpasta dentro de uma subpasta
-            newFolders[grandParentIndex].subFolders[parentIndex].subFolders.push(newFolder);
-        } else if (parentIndex !== null) {
-            // Adiciona uma subpasta dentro de uma pasta
-            newFolders[parentIndex].subFolders.push(newFolder);
-        } else {
-            // Adiciona uma nova pasta no nível superior
-            newFolders.push(newFolder);
-        }
-    
-        setData({ ...data, folders: newFolders });
-    };
-
-    // Função para excluir uma pasta ou subpasta
-    const deleteFolder = (index, parentIndex = null) => {
-        const newFolders = [...data.folders];
-        if (parentIndex !== null) {
-            newFolders[parentIndex].subFolders.splice(index, 1);
-        } else {
-            newFolders.splice(index, 1);
-        }
-        setData({ ...data, folders: newFolders });
-    };
-
-    // Função para excluir um arquivo
-    const deleteFile = (fileIndex, folderIndex, parentIndex = null) => {
-        const newFolders = [...data.folders];
-        if (parentIndex !== null) {
-            newFolders[parentIndex].subFolders[folderIndex].files.splice(fileIndex, 1);
-        } else {
-            newFolders[folderIndex].files.splice(fileIndex, 1);
-        }
-        setData({ ...data, folders: newFolders });
-    };
-
-    // Função para atualizar o nome de uma pasta
-    const onFolderNameChange = (e, index, parentIndex = null) => {
-        const newFolders = [...data.folders];
-        if (parentIndex !== null) {
-            newFolders[parentIndex].subFolders[index].name = e.target.value;
-        } else {
-            newFolders[index].name = e.target.value;
-        }
-        setData({ ...data, folders: newFolders });
-    };
-
-    // Atualiza os arquivos de uma pasta
-    const onFileChange = (e, index, parentIndex = null) => {
-        const newFolders = [...data.folders];
-        const files = e.target.files;
-        if (parentIndex !== null) {
-            newFolders[parentIndex].subFolders[index].files = Array.from(files);
-        } else {
-            newFolders[index].files = Array.from(files);
-        }
-        setData({ ...data, folders: newFolders });
-    };
-
-    // Função recursiva para renderizar as pastas e arquivos
-    const renderFolders = (folders, parentIndex = null) => {
-        return folders.map((folder, index) => (
-            <Folder
-                key={index}
-                folder={folder}
-                index={index}
-                parentIndex={parentIndex}
-                onFolderNameChange={onFolderNameChange}
-                deleteFolder={deleteFolder}
-                addFolder={addFolder}
-                onFileChange={onFileChange}
-                deleteFile={deleteFile}
-                renderFolders={renderFolders}
-            />
-        ));
-    };
 
     const onSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('name', data.name);
-        formData.append('id', data.id);
         formData.append('cnpj', data.cnpj);
-
-        data.folders.forEach((folder, index) => {
-            formData.append(`folders[${index}].name`, folder.name);
-            folder.files.forEach((file) => {
-                formData.append(`folders[${index}].files[]`, file);
-            });
-            folder.subFolders.forEach((subFolder, subIndex) => {
-                formData.append(`folders[${index}].subFolders[${subIndex}].name`, subFolder.name);
-                subFolder.files.forEach((file) => {
-                    formData.append(`folders[${index}].subFolders[${subIndex}].files[]`, file);
-                });
-            });
-        });
+        formData.append('folders', JSON.stringify(data.folders));
 
         post(route('companies.store'), {
             data: formData,
@@ -122,12 +26,44 @@ export default function CreateCompany({ close }) {
         });
     };
 
+    const addFileToFolder = (folder, fileName) => {
+        if (!fileName) return; // Validação simples
+        const updatedFolders = updateFolderStructure(data.folders, folder, (f) => ({
+            ...f,
+            files: [...f.files, fileName],
+        }));
+        setData({ ...data, folders: updatedFolders });
+    };
+
+    const addFolderToFolder = (folder, folderName) => {
+        if (!folderName) return; // Validação simples
+        const updatedFolders = updateFolderStructure(data.folders, folder, (f) => ({
+            ...f,
+            subFolders: [...f.subFolders, { name: folderName, files: [], subFolders: [] }],
+        }));
+        setData({ ...data, folders: updatedFolders });
+    };
+
+    const updateFolderStructure = (folders, targetFolder, updateFn) => {
+        return folders.map((folder) => {
+            if (folder === targetFolder) {
+                return updateFn(folder);
+            } else if (folder.subFolders.length > 0) {
+                return {
+                    ...folder,
+                    subFolders: updateFolderStructure(folder.subFolders, targetFolder, updateFn),
+                };
+            }
+            return folder;
+        });
+    };
+
     return (
         <>
             <form onSubmit={onSubmit}>
                 <div className="modal-body">
                     <div className="form-group">
-                        <label htmlFor="name" className="col-form-label">Empresa:</label>
+                        <label htmlFor="name">Empresa:</label>
                         <input
                             type="text"
                             className="form-control"
@@ -140,7 +76,7 @@ export default function CreateCompany({ close }) {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="cnpj" className="col-form-label">CNPJ:</label>
+                        <label htmlFor="cnpj">CNPJ:</label>
                         <input
                             type="text"
                             className="form-control"
@@ -153,26 +89,16 @@ export default function CreateCompany({ close }) {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="id" className="col-form-label">ID da Empresa:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="id"
-                            value={data.id}
-                            onChange={(e) => setData({ ...data, id: e.target.value })}
-                            id="id"
-                        />
-                        {errors && <div className="text-danger mt-1">{errors.id}</div>}
+                        <label>Estrutura de Pastas e Arquivos:</label>
+                        {data.folders.map((folder, index) => (
+                            <Folder
+                                key={index}
+                                folder={folder}
+                                onAddFile={addFileToFolder}
+                                onAddFolder={addFolderToFolder}
+                            />
+                        ))}
                     </div>
-
-                    {/* Renderiza as pastas e subpastas */}
-                    <div className={styles.folderContainer}>
-                        {renderFolders(data.folders)}
-                    </div>
-
-                    <button type="button" className="btn btn-link" onClick={() => addFolder()}>
-                        Adicionar nova pasta
-                    </button>
                 </div>
 
                 <div className="modal-footer">
