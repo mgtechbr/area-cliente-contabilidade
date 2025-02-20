@@ -1,0 +1,9 @@
+.custom-btn {
+    background-color: #ff5733; /* Laranja */
+    color: white; /* Cor do texto */
+    border: none;
+  }
+  
+  .custom-btn:hover {
+    background-color: #e64a1b;
+  }

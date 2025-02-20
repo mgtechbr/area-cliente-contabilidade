@@ -11281,3 +11281,13 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+#btn-logar {
+  background-color: #ff5733; /* Laranja */
+  color: white; /* Cor do texto */
+  border: none;
+}
+
+#btn-logar:hover {
+  background-color: #e64a1b;
+}

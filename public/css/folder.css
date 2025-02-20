@@ -1,0 +1,59 @@
+.folder-container {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.folder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #e1e1e1;
+    border-radius: 4px;
+}
+
+.folder-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.input-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.file-input {
+    display: none;
+}
+
+.add-folder-btn, .upload-file-btn, .delete-folder-btn {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-file-btn {
+    background-color: #007bff;
+}
+
+.delete-folder-btn {
+    background-color: #d9534f;
+}
+
+.subfolders {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.file-item {
+    margin-left: 20px;
+    padding: 5px 0;
+}

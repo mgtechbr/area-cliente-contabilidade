@@ -42,10 +42,10 @@ export default function Index(props) {
                 </Dialog>
 
                 <Dialog trigger={destroyTrigger} title={`Delete User: ${state.name}`}>
-                    <p>Are you sure to delete this user ?</p>
+                    <p>Tem certeza que deseja excluir este usuário? ?</p>
                     <div className="modal-footer">
-                        <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onClick={destroyUser} className="btn bg-gradient-danger">Delete</button>
+                        <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" onClick={destroyUser} className="btn bg-gradient-danger">Deletar</button>
                     </div>
                 </Dialog>
 
@@ -55,11 +55,11 @@ export default function Index(props) {
                             <div className="card-header pb-0">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h6>Users table</h6>
+                                    <h6>Usuários</h6>
                                 </div>
                                 <div className="col-md-6 d-flex justify-content-end">
                                     <button onClick={addDialogHandler} type="button" className="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
-                                        Create New User
+                                        Criar novo usuário
                                     </button>
                                 </div>
                             </div>
@@ -70,10 +70,10 @@ export default function Index(props) {
                                     <thead>
                                         <tr>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-centter">#</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Name</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Username</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Nome</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Usuário</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Email</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Address</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Empresa</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Actions</th>
                                         </tr>
                                     </thead>
@@ -99,7 +99,7 @@ export default function Index(props) {
                                                 </td>
                                                 <td className="align-middle text-left">
                                                     <div className="d-flex align-items-center text-left">
-                                                        <span className="text-xs font-weight-bold mb-0">{user.address}</span>
+                                                        <span className="text-xs font-weight-bold mb-0">{user.company_name}</span>
                                                     </div>
                                                 </td>
                                                 <td className="align-middle text-center" width="10%">

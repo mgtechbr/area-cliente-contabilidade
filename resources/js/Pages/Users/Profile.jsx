@@ -53,42 +53,31 @@ export default function Profile(props) {
                             <form onSubmit={onSubmit}>
                                 <div className="card-header pb-0">
                                     <div className="d-flex align-items-center">
-                                    <p className="mb-0">Edit Profile</p>
-                                    <button type='submit' className="btn btn-primary btn-sm ms-auto">Save</button>
+                                    <p className="mb-0">Editar Usuário</p>
+                                    <button type='submit' className="btn btn-primary btn-sm ms-auto">Salvar</button>
                                     </div>
                                 </div>
                                 <div className="card-body">                                
-                                    <p className="text-uppercase text-sm">User Information</p>
+                                    <p className="text-uppercase text-sm">Informação de usúario</p>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                            <label htmlFor="username" className="form-control-label">Username</label>
+                                            <label htmlFor="username" className="form-control-label">Nome de Usuário</label>
                                             <input className="form-control" type="text" name='username' value={data.username} onChange={onChange} id="username" />
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                            <label htmlFor="email" className="form-control-label">Email address</label>
+                                            <label htmlFor="email" className="form-control-label">Email</label>
                                             <input className="form-control" type="email" name='email' value={data.email} onChange={onChange} id="email" />
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="form-group">
-                                            <label htmlFor="name" className="form-control-label">Name</label>
-                                            <input className="form-control" type="text" name='name' value={data.name} onChange={onChange} id="name" />
+                                            <label htmlFor="name" className="form-control-label">Empresa</label>
+                                            <input className="form-control" type="text" name='company' value={data.name} onChange={onChange} id="company" />
                                             </div>
-                                        </div>
-                                        
-                                        </div>
-                                        <hr className="horizontal dark" />
-                                        <p className="text-uppercase text-sm">Contact Information</p>
-                                        <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                            <label htmlFor="address" className="form-control-label">Address</label>
-                                            <input className="form-control" type="text" name='address' value={data.address} onChange={onChange} id="address" />
-                                            </div>
-                                        </div>
+                                        </div>    
                                     </div>
                                 </div>
                             </form>

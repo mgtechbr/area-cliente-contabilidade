@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 export default function EditUser({close, model}) {
 
-    const {data, setData, put, reset, errors} = useForm({ name: model.name, email: model.email, username: model.username, address: model.address, password: model.password, });
+    const {data, setData, put, reset, errors} = useForm({ name: model.name, email: model.email, username: model.username, password: model.password, company_id: model.company_id });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
 
@@ -20,7 +20,7 @@ export default function EditUser({close, model}) {
 
     useEffect(() => {
         setData({...data,
-            name: model.name, email: model.email, username: model.username, address: model.address, password: model.password
+            name: model.name, email: model.email, username: model.username, password: model.password, company_id: model.company_id 
         });
     }, [model]);
 
@@ -44,9 +44,9 @@ export default function EditUser({close, model}) {
                             {errors && <div className='text-danger mt-1'>{errors.email}</div>}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="address" className="col-form-label">Address:</label>
-                            <input type="text" className="form-control" name='address' value={`${data.address || ''}`} onChange={onChange} id="address"/>
-                            {errors && <div className='text-danger mt-1'>{errors.address}</div>}
+                            <label htmlFor="company_id" className="col-form-label">Empresa:</label>
+                            <input type="text" className="form-control" name='company_id' value={`${data.company_id}`} onChange={onChange} id="company_id"/>
+                            {errors && <div className='text-danger mt-1'>{errors.company_id}</div>}
                         </div>
                 </div>
                 <div className="modal-footer">

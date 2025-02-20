@@ -6,8 +6,8 @@ export default function Sidebar({ user }) {
         <aside className="sidenav bg-default navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
             <div className="sidenav-header">
                 <i className="fas fa-times p-3 cursor-pointer opacity-5 position-absolute end-0 top-0 d-none d-xl-none opacity-8 text-white" aria-hidden="true" id="iconSidenav" />
-                <Link className="navbar-brand m-0" href={route('home')} target="_blank">
-                    <span className="ms-1 font-weight-bold"> Laravel Inertia React Starter</span>
+                <Link className="navbar-brand m-0" href={route('login')} target="_blank">
+                    <span className="ms-1 font-weight-bold"> Franco Gestão Empresarial</span>
                 </Link>
             </div>
             <hr className="horizontal dark mt-0" />
@@ -25,7 +25,7 @@ export default function Sidebar({ user }) {
                             </li>
                             
                             <li className="nav-item mt-3">
-                                <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Manage</h6>
+                                <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Gerenciar</h6>
                             </li>
                             
                             <li className="nav-item">

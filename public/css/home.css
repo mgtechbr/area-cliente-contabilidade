@@ -1,0 +1,15 @@
+#btn-logar {
+  background-color: #b7100a;
+  /* Laranja */
+  color: white;
+  /* Cor do texto */
+  border: none;
+}
+
+#btn-logar:hover {
+  background-color: #370704;
+}
+
+#background-img-banner {
+  background-image: linear-gradient(310deg, #db000008 0%, #000000db 100%);
+}
