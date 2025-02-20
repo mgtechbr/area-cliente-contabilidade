@@ -10,6 +10,8 @@ import { Inertia } from '@inertiajs/inertia';
 export default function Index(props) {
 
     const {data: users, links, meta} = props.users; 
+    const companies = props.companies ?? [];
+    console.log(companies);
     const [state, setState] = useState([])
     const [addDialogHandler, addCloseTrigger,addTrigger] = useDialog()
     const [UpdateDialogHandler, UpdateCloseTrigger,UpdateTrigger] = useDialog()
@@ -34,11 +36,11 @@ export default function Index(props) {
         <>
             <div className="container-fluid py-4">
                 <Dialog trigger={addTrigger} title="Create New User"> 
-                    <CreateUser close={addCloseTrigger}/>
+                    <CreateUser companies={companies} close={addCloseTrigger}/>
                 </Dialog>
 
                 <Dialog trigger={UpdateTrigger} title={`Update User: ${state.name}`}> 
-                    <EditUser model={state} close={UpdateCloseTrigger}/>
+                    <EditUser model={state} companies={companies} close={UpdateCloseTrigger}/>
                 </Dialog>
 
                 <Dialog trigger={destroyTrigger} title={`Delete User: ${state.name}`}>

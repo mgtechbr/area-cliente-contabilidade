@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/inertia-react'
 import React from 'react'
 
-export default function CreateUser({close}) {
+export default function CreateUser({close, companies}) {
 
     const {data, setData, post, reset, errors} = useForm({ name: '', email: '', username: '', address: '', password: '', });
 
@@ -23,7 +23,7 @@ export default function CreateUser({close}) {
             <form onSubmit={onSubmit}>
                 <div className="modal-body">
                         <div className="form-group">
-                            <label htmlFor="name" className="col-form-label">Name:</label>
+                            <label htmlFor="name" className="col-form-label">Nome:</label>
                             <input type="text" className="form-control" name='name' value={data.name} onChange={onChange} id="name"/>
                             {errors && <div className='text-danger mt-1'>{errors.name}</div>}
                         </div>
@@ -38,12 +38,18 @@ export default function CreateUser({close}) {
                             {errors && <div className='text-danger mt-1'>{errors.email}</div>}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="address" className="col-form-label">Address:</label>
-                            <input type="text" className="form-control" name='address' value={data.address} onChange={onChange} id="address"/>
-                            {errors && <div className='text-danger mt-1'>{errors.address}</div>}
+                            <label htmlFor="company_id" className="col-form-label">Selecione uma Empresa:</label>
+                            <select className="form-control" name="company_id" value={data.company_id} onChange={onChange} id="company_id">
+                                {companies.map(company => (
+                                    <option key={company.id} value={company.id}>
+                                        {company.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.company_id && <div className='text-danger mt-1'>{errors.company_id}</div>}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password" className="col-form-label">Password:</label>
+                            <label htmlFor="password" className="col-form-label">Senha:</label>
                             <input type="password" className="form-control" name='password' value={data.password} onChange={onChange} id="password"/>
                             {errors && <div className='text-danger mt-1'>{errors.password}</div>}
                         </div>

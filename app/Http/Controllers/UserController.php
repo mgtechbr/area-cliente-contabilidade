@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,38 +14,51 @@ class UserController extends Controller
     public function index()
     {
         $users = UserResource::collection(User::latest()->paginate(10));
+        $companies = Company::select('id', 'name')->get(); 
+        
         return inertia('Users/Index', [
             'users' => $users,
+            'companies' => $companies,
         ]);
+        
     }
 
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $attr = $request->toArray();
-        $attr['company_id'] = $request->user()->company_id; 
+        $validated = $request->validate([
+            'name' => 'nullable|string',
+            'username' => 'nullable|string',
+            'email' => 'nullable|string',
+            'company_id' => 'nullable|int'
+        ]);
 
 
-        User::create($attr);
+        User::create($request->all());
 
         return back()->with([
             'type' => 'success',
-            'message' => 'User has been created',
+            'message' => 'Usuário criado com sucesso!',
         ]);
     }
 
 
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $attr = $request->toArray();
-        $attr['company_id'] = $request->user()->company_id;
-
-        $user->update($attr);
-
+        $validated = $request->validate([
+            'name' => 'nullable|string',
+            'username' => 'nullable|string',
+            'email' => 'nullable|string',
+            'company_id' => 'nullable|int'
+        ]);
+    
+        $user->update($request->only(['name', 'username', 'email', 'company_id']));
+    
         return back()->with([
             'type' => 'success',
-            'message' => 'User has been updated',
+            'message' => 'Usuário atualizado com sucesso!',
         ]);
     }
+    
 
     public function destroy(User $user)
     {
