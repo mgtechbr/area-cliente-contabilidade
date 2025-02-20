@@ -17,7 +17,7 @@ export default function Base({ children, title }) {
 
     return (
         <div className="g-sidenav-show bg-gray-100">
-            <div className="min-height-300 bg-primary position-absolute w-100"></div>
+            <div id="bk-principal" className="min-height-300 position-absolute w-100"></div>
             <Head title={title} />
             {/* Passando o usuário para o Sidebar */}
             <Sidebar user={auth?.user} />

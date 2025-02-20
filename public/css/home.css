@@ -13,3 +13,11 @@
 #background-img-banner {
   background-image: linear-gradient(310deg, #db000008 0%, #000000db 100%);
 }
+
+#bk-principal{
+  background-color: #B7100A;
+}
+
+#sidenav-main{
+  background-color: #360705;
+}
