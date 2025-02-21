@@ -54,8 +54,8 @@ export default function Sidebar({ user }) {
 
                     <li className="nav-item">
                         <Link
-                            className={`${route().current('company.files', { company: user.company_id }) && 'active'} nav-link`}
-                            href={route('company.files', { company: user.company_id })}
+                            className={`${route().current('onedrive.files', { company: user.company_id }) && 'active'} nav-link`}
+                            href={route('onedrive.files', { company: user.company_id })}
                         >
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i className="fas fa-folder-open text-info text-sm opacity-10" />
@@ -63,6 +63,20 @@ export default function Sidebar({ user }) {
                             <span className="nav-link-text ms-1">Empresa Arquivos</span>
                         </Link>
                     </li>
+
+                    <li className="nav-item">
+                    <Link
+                        className={`${route().current('onedrive.login') && 'active'} nav-link`}
+                        href={route('onedrive.redirect')}  // Redireciona para o método que inicia a autenticação do OneDrive
+                        target="_blank" // Garante que a autenticação aconteça em uma nova guia
+                    >
+                        <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i className="fas fa-folder-open text-info text-sm opacity-10" />
+                        </div>
+                        <span className="nav-link-text ms-1">Conectar One Drive</span>
+                    </Link>
+                    </li>
+
 
                     <li className="nav-item">
                         <Link className="nav-link" as='a' method='post' href={route('logout')}>

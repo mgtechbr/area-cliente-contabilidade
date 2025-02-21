@@ -7,6 +7,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\Storage;
 use app\Http\Controllers\Controller;
+use app\Http\Controllers\OneDriveController;
 use App\Models\Company;
 use Illuminate\Support\Facades\Http;
 
@@ -82,43 +83,6 @@ class CompanyController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Empresa deletada com sucesso!',
-        ]);
-    }
-
-    public function files(Company $company)
-    {
-        $accessToken = session('onedrive_token');
-    
-        if (!$accessToken) {
-            return redirect()->route('onedrive.redirect');
-        }
-    
-        // Obtém os arquivos da pasta específica da empresa no OneDrive
-        $baseFolderPath = 'companies/' . $company->codCompany;
-        $response = Http::withToken($accessToken)->get("https://graph.microsoft.com/v1.0/me/drive/root:/{$baseFolderPath}:/children");
-    
-        if ($response->failed()) {
-            return inertia('Companies/OneDriveFiles', [
-                'company' => $company,
-                'files' => [],
-                'error' => 'Falha ao carregar arquivos do OneDrive',
-            ]);
-        }
-    
-        $files = collect($response->json()['value'] ?? [])
-            ->map(function ($file) {
-                return [
-                    'id' => $file['id'],
-                    'name' => $file['name'],
-                    'downloadUrl' => "/onedrive/download/{$file['id']}",
-                ];
-            })
-            ->toArray();
-    
-        return inertia('Companies/OneDriveFiles', [
-            'company' => $company,
-            'files' => $files,
-            'error' => null,
         ]);
     }
     

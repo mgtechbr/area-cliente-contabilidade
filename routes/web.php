@@ -20,7 +20,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['auth', 'user.folder'])->group(function () {
         Route::apiResource('companies', CompanyController::class);
-        Route::get('company/{company}/files', [CompanyController::class, 'files'])->name('company.files');
+   //     Route::get('company/{company}/files', [CompanyController::class, 'files'])->name('company.files');
+        Route::get('company/{company}/files', [OneDriveController::class, 'files'])->name('onedrive.files');
         Route::get('create', [CompanyController::class, 'create'])->name('companies.create');
     });
     
@@ -41,12 +42,14 @@ Route::middleware('guest')->group(function () {
 
 
 
-Route::get('/onedrive/login', [OneDriveController::class, 'redirectToOneDrive'])->name('onedrive.redirect');
-Route::get('/onedrive/callback', [OneDriveController::class, 'handleOneDriveCallback']);
-Route::middleware('auth')->group(function () {
-    Route::get('/onedrive/files/{company}', [OneDriveController::class, 'files']);
-    Route::get('/onedrive/download/{fileId}', [OneDriveController::class, 'downloadFile']);
+Route::prefix('onedrive')->group(function() {
+    Route::get('/login', [OneDriveController::class, 'redirectToOneDrive'])->name('onedrive.redirect');
+    Route::get('/callback', [OneDriveController::class, 'handleOneDriveCallback']);
+    Route::get('/files/{company}', [OneDriveController::class, 'files']);
+    Route::get('/download/{fileId}', [OneDriveController::class, 'downloadFile']);
 });
+
+
 
 
 
