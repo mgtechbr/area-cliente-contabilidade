@@ -8,6 +8,7 @@ use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\Storage;
 use app\Http\Controllers\Controller;
 use App\Models\Company;
+use Illuminate\Support\Facades\Http;
 
 class CompanyController extends Controller
 {
@@ -86,20 +87,39 @@ class CompanyController extends Controller
 
     public function files(Company $company)
     {
-        $directories = Storage::directories('companies/' . $company->codCompany);
-        $files = [];
-        foreach ($directories as $directory) {
-            $files[] = [
-                'folder' => $directory,
-                'files' => array_map(function ($file) {
-                    return str_replace('storage/', '', Storage::url($file));
-                }, Storage::files($directory)),
-            ];
+        $accessToken = session('onedrive_token');
+    
+        if (!$accessToken) {
+            return redirect()->route('onedrive.redirect');
         }
-
-        return inertia('Companies/Folder', [
+    
+        // Obtém os arquivos da pasta específica da empresa no OneDrive
+        $baseFolderPath = 'companies/' . $company->codCompany;
+        $response = Http::withToken($accessToken)->get("https://graph.microsoft.com/v1.0/me/drive/root:/{$baseFolderPath}:/children");
+    
+        if ($response->failed()) {
+            return inertia('Companies/OneDriveFiles', [
+                'company' => $company,
+                'files' => [],
+                'error' => 'Falha ao carregar arquivos do OneDrive',
+            ]);
+        }
+    
+        $files = collect($response->json()['value'] ?? [])
+            ->map(function ($file) {
+                return [
+                    'id' => $file['id'],
+                    'name' => $file['name'],
+                    'downloadUrl' => "/onedrive/download/{$file['id']}",
+                ];
+            })
+            ->toArray();
+    
+        return inertia('Companies/OneDriveFiles', [
             'company' => $company,
-            'directories' => $files,
+            'files' => $files,
+            'error' => null,
         ]);
     }
+    
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OneDriveController;
 
 
 Route::middleware('auth')->group(function () {
@@ -37,5 +38,15 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 });
+
+
+
+Route::get('/onedrive/login', [OneDriveController::class, 'redirectToOneDrive'])->name('onedrive.redirect');
+Route::get('/onedrive/callback', [OneDriveController::class, 'handleOneDriveCallback']);
+Route::middleware('auth')->group(function () {
+    Route::get('/onedrive/files/{company}', [OneDriveController::class, 'files']);
+    Route::get('/onedrive/download/{fileId}', [OneDriveController::class, 'downloadFile']);
+});
+
 
 
