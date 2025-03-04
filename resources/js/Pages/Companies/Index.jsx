@@ -5,6 +5,9 @@ import Base from '../../Layouts/Base';
 import useDialog from '../../Hooks/useDialog';
 import EditCompany from '../../Components/Dashboard/Companies/EditCompany.jsx';
 import { Inertia } from '@inertiajs/inertia';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Index(props) {
     const companies = props.companies.data || []; // Evita erro caso seja undefined
@@ -82,7 +85,7 @@ export default function Index(props) {
                                     <table className="table align-items-center justify-content-center mb-0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">#</th>
+                                                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">Número da Empresa</th>
                                                 <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Empresa</th>
                                                 <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">CNPJ</th>
                                                 <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Ações</th>
@@ -93,11 +96,11 @@ export default function Index(props) {
                                                 companies.map((company, index) => (
                                                     
                                                     <tr key={company.id}>
-                                                        <td className='text-center'>{index + 1}</td>
+                                                        <td className='text-center'>{company.codCompany}</td>
                                                         <td className='text-left'>
                                                             <div className="d-flex px-2">
                                                                 <div>
-                                                                    <img src="/img/team-2.jpg" className="avatar avatar-sm me-3" alt="Avatar" />
+                                                                    <img src="/img/company-icon.png" className="avatar avatar-sm me-3" alt="Avatar" />
                                                                 </div>
                                                                 <div className="my-auto">
                                                                     <h6 className="mb-0 text-sm">{company.name}</h6>
@@ -110,10 +113,10 @@ export default function Index(props) {
                                                         <td className="align-middle text-center" width="10%">
                                                             <div>
                                                                 <button type="button" onClick={() => openUpdateDialog(company)} className="btn btn-vimeo btn-icon-only mx-2">
-                                                                    <span className="btn-inner--icon"><i className="fas fa-pencil-alt"></i></span>
+                                                                    <FontAwesomeIcon icon={faPencilAlt} />
                                                                 </button>
                                                                 <button type="button" onClick={() => openDestroyDialog(company)} className="btn btn-youtube btn-icon-only">
-                                                                    <span className="btn-inner--icon"><i className="fas fa-trash"></i></span>
+                                                                    <FontAwesomeIcon icon={faTrash} />
                                                                 </button>
                                                             </div>
                                                         </td>

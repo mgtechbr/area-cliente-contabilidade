@@ -23,12 +23,12 @@ class LoginController extends Controller
             session()->regenerate();
             return redirect('/dashboard')->with([
                 'type' => 'success',
-                'message' => 'You are logged in.'
+                'message' => 'Você logou!'
             ]);
         }
 
         throw ValidationException::withMessages([
-            'email' => 'The provide credentials does not match our record.',
+            'email' => 'O email fornecido não está correto ou não existe!!.',
         ]);
     }
 
@@ -36,7 +36,7 @@ class LoginController extends Controller
         Auth::logout();
 
         return redirect('/login')->with([
-            'type' => 'success', 'message' => 'You are now logout.',
+            'type' => 'success', 'message' => 'Você deslogou!',
         ]);
     }
 }

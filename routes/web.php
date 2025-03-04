@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth', 'user.folder'])->group(function () {
         Route::apiResource('companies', CompanyController::class);
    //     Route::get('company/{company}/files', [CompanyController::class, 'files'])->name('company.files');
-        Route::get('company/{company}/files', [OneDriveController::class, 'files'])->name('onedrive.files');
+        Route::get('company/files', [OneDriveController::class, 'files'])->name('onedrive.files');
         Route::get('create', [CompanyController::class, 'create'])->name('companies.create');
     });
     

@@ -85,7 +85,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
                 'onedrive_token_expires' => now()->addSeconds($data['expires_in']),
             ]);
     
-            return redirect('/onedrive/files');
+            return redirect('/dashboard');
         }
     
         return response()->json(['error' => 'Failed to authenticate'], 400);

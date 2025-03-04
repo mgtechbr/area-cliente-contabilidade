@@ -6,12 +6,16 @@ import useDialog from '../../Hooks/useDialog';
 import CreateUser from '../../Components/Dashboard/Users/CreateUser';
 import EditUser from '../../Components/Dashboard/Users/EditUser';
 import { Inertia } from '@inertiajs/inertia';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+<FontAwesomeIcon icon={faPencilAlt} />
 
 export default function Index(props) {
 
     const {data: users, links, meta} = props.users; 
     const companies = props.companies ?? [];
-    console.log(companies);
     const [state, setState] = useState([])
     const [addDialogHandler, addCloseTrigger,addTrigger] = useDialog()
     const [UpdateDialogHandler, UpdateCloseTrigger,UpdateTrigger] = useDialog()
@@ -86,7 +90,7 @@ export default function Index(props) {
                                                 <td className='text-left'>
                                                     <div className="d-flex px-2">
                                                         <div>
-                                                            <img src="/img/team-2.jpg" className="avatar avatar-sm  me-3 " />
+                                                            <img src="/img/user-icon.png" className="avatar avatar-sm  me-3 " />
                                                         </div>
                                                         <div className="my-auto">
                                                             <h6 className="mb-0 text-sm">{user.name}</h6>
@@ -107,10 +111,10 @@ export default function Index(props) {
                                                 <td className="align-middle text-center" width="10%">
                                                 <div>
                                                     <button type="button" onClick={() => openUpdateDialog(user)} className="btn btn-vimeo btn-icon-only mx-2">
-                                                        <span className="btn-inner--icon"><i className="fas fa-pencil-alt"></i></span>
+                                                        <FontAwesomeIcon icon={faPencilAlt} />
                                                     </button>
                                                     <button type="button" onClick={() => openDestroyDialog(user)} className="btn btn-youtube btn-icon-only">
-                                                        <span className="btn-inner--icon"><i className="fas fa-trash"></i></span>
+                                                        <FontAwesomeIcon icon={faTrash} />
                                                     </button>
                                                 </div>
                                                 </td>

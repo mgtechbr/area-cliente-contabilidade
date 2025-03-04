@@ -63,7 +63,7 @@ export default function EditCompany({ close, model }) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="codCompany">codCompany:</label>
+                    <label htmlFor="codCompany">Código da Empresa:</label>
                     <input
                         type="text"
                         className="form-control"

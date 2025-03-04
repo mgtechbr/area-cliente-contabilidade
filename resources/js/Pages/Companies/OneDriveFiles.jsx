@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
 import { Link } from '@inertiajs/inertia-react';
+import React, { useState } from 'react';
+import Dialog from '../../Components/Dashboard/Dialog';
+import Base from '../../Layouts/Base';
+import useDialog from '../../Hooks/useDialog';
+import EditCompany from '../../Components/Dashboard/Companies/EditCompany.jsx';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function OneDriveFiles(props) {
     const { files, company, error } = props;  
 
     return (
-        <div className="p-6">
+        <div className="p-6" id="container-arquivo">
             <h1 className="text-2xl font-bold">Arquivos do OneDrive - {company}</h1> 
 
             {error && <p className="text-red-500">{error}</p>}  
@@ -30,3 +35,5 @@ export default function OneDriveFiles(props) {
         </div>
     );
 }
+OneDriveFiles.layout = (page) => <Base key={page} children={page} title={"Gerenciamento de Empresas"} />;
+
