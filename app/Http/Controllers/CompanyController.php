@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use app\Http\Controllers\Controller;
 use app\Http\Controllers\OneDriveController;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
 class CompanyController extends Controller
@@ -78,8 +79,9 @@ class CompanyController extends Controller
     // Exclusão de uma empresa
     public function destroy(Company $company)
     {
+        User::where('company_id', $company->id)->delete();
         $company->delete();
-
+    
         return back()->with([
             'type' => 'success',
             'message' => 'Empresa deletada com sucesso!',

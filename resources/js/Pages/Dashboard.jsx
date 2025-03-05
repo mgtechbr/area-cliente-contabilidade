@@ -1,53 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Base from '../Layouts/Base';
-import axios from 'axios';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import CountUp from 'react-countup';
 
 export default function Dashboard(props) {
-    const { companies, users } = props.stats; 
+    const { companies, users } = props.stats;
 
-    console.log( props.stats)
+    const data = [
+        { name: 'Usuários', value: users },
+        { name: 'Empresas', value: companies }
+    ];
+
+    const recentActivities = [
+        "Usuário João cadastrou um novo imóvel",
+        "Empresa XPTO atualizou seus dados",
+        "Novo usuário Maria se registrou",
+        "Imóvel de código #234 foi vendido"
+    ];
+
     return (
-        <>
-            <div className="container-fluid py-4">
-                <div className="row">
-                    <div className="col-xl-6 col-sm-6 mb-4">
-                        <div className="card">
-                            <div className="card-body p-3">
-                                <h5 className="font-weight-bolder">Usuários cadastrados</h5>
-                                <h3>{users}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-xl-6 col-sm-6 mb-4">
-                        <div className="card">
-                            <div className="card-body p-3">
-                                <h5 className="font-weight-bolder">Empresas cadastradas</h5>
-                                <h3>{companies}</h3>
-                            </div>
-                        </div>
+        <div className="container-fluid py-4">
+            <div className="row">
+                <div className="col-xl-6 col-sm-6 mb-4">
+                    <div className="card text-center p-3">
+                        <h5 className="font-weight-bolder">Usuários cadastrados</h5>
+                        <h3><CountUp end={users} duration={2} /></h3>
                     </div>
                 </div>
-                <div className="row mt-4">
-                    <div className="col-lg-12">
-                        <div className="card card-carousel overflow-hidden h-100 p-0">
-                            <div id="carouselExampleCaptions" className="carousel slide h-100" data-bs-ride="carousel">
-                                <div className="carousel-inner border-radius-lg h-100">
-                              
-                                </div>
-                                <button className="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                    <span className="carousel-control-prev-icon" aria-hidden="true" />
-                                    <span className="visually-hidden">Previous</span>
-                                </button>
-                                <button className="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                    <span className="carousel-control-next-icon" aria-hidden="true" />
-                                    <span className="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                        </div>
+                <div className="col-xl-6 col-sm-6 mb-4">
+                    <div className="card text-center p-3">
+                        <h5 className="font-weight-bolder">Empresas cadastradas</h5>
+                        <h3><CountUp end={companies} duration={2} /></h3>
                     </div>
                 </div>
             </div>
-        </>
+            <div className="row">
+                <div className="col-lg-6">
+                    <div className="card p-3">
+                        <h5 className="font-weight-bolder">Estatísticas</h5>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={data}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar dataKey="value" fill="#8884d8" barSize={50} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                <div className="col-lg-6">
+                    <div className="card p-3">
+                        <h5 className="font-weight-bolder">Atividades Recentes</h5>
+                        <ul>
+                            {recentActivities.map((activity, index) => (
+                                <li key={index}>{activity}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
